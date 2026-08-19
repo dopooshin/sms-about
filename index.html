@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于思谋思 | 诚以立人 善以造物 德以立业</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0a1a2f;
+    --navy-light: #132d4f;
+    --steel: #1e4068;
+    --accent: #c8102e;
+    --accent-glow: rgba(200, 16, 46, 0.15);
+    --gold: #c9a96e;
+    --text-light: #f0f2f5;
+    --text-muted: #8a9bb5;
+    --bg-soft: #f5f7fa;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    color: #1a1a1a;
+    background: #fff;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ===== 导航栏 ===== */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.4s ease;
+    background: transparent;
+  }
+  .navbar.scrolled {
+    background: rgba(10, 26, 47, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 14px 60px;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--accent);
+    letter-spacing: -1px;
+  }
+  .logo-text { font-size: 15px; font-weight: 700; letter-spacing: 2px; }
+  .logo-text small { display: block; font-size: 9px; font-weight: 400; letter-spacing: 1px; color: var(--text-muted); margin-top: 2px; }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #fff; }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+  .nav-phone {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .nav-phone span { color: var(--accent); }
+
+  /* ===== Hero区 ===== */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('img2.jpg') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: slowZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes slowZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.15); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(10,26,47,0.92) 0%, rgba(10,26,47,0.7) 50%, rgba(10,26,47,0.85) 100%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    padding: 0 40px;
+    max-width: 1100px;
+  }
+  .hero-eyebrow {
+    font-size: 13px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    letter-spacing: 8px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-title .char {
+    display: inline-block;
+    transition: color 0.3s;
+  }
+  .hero-title .char-accent { color: var(--accent); }
+  .hero-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 30px auto;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero-sub {
+    font-size: clamp(15px, 1.8vw, 20px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 3px;
+    line-height: 2;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-sub strong { color: #fff; font-weight: 500; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-align: center;
+    animation: bounce 2s infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+    margin: 12px auto 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== 理念引言 ===== */
+  .intro {
+    padding: 120px 60px 80px;
+    text-align: center;
+    background: var(--bg-soft);
+    position: relative;
+  }
+  .intro::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+  }
+  .intro-quote {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 2;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    letter-spacing: 2px;
+  }
+  .intro-quote .hl { color: var(--accent); }
+  .intro-text {
+    font-size: 15px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 2;
+  }
+
+  /* ===== 三字理念区 ===== */
+  .values {
+    padding: 100px 60px 120px;
+    background: #fff;
+  }
+  .values-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .values-label {
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .values-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--navy);
+    letter-spacing: 4px;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .value-card {
+    position: relative;
+    padding: 60px 40px;
+    border-right: 1px solid #e8ecf1;
+    transition: all 0.5s ease;
+    cursor: default;
+  }
+  .value-card:last-child { border-right: none; }
+  .value-card:hover {
+    background: var(--navy);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(10,26,47,0.2);
+  }
+  .value-card:hover .value-num,
+  .value-card:hover .value-char,
+  .value-card:hover .value-title,
+  .value-card:hover .value-desc { color: #fff; }
+  .value-card:hover .value-desc { color: rgba(255,255,255,0.7); }
+  .value-card:hover .value-line { background: var(--accent); }
+
+  .value-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ccc;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    transition: color 0.5s;
+  }
+  .value-char {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 24px;
+    transition: color 0.5s;
+  }
+  .value-line {
+    width: 40px;
+    height: 3px;
+    background: #ddd;
+    margin-bottom: 24px;
+    transition: background 0.5s;
+  }
+  .value-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+    transition: color 0.5s;
+  }
+  .value-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 2;
+    transition: color 0.5s;
+  }
+
+  /* ===== 现场展示区 ===== */
+  .showcase {
+    padding: 100px 60px;
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+  .showcase::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    pointer-events: none;
+  }
+  .showcase-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .showcase-label {
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .showcase-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 4px;
+  }
+  .showcase-title span { color: var(--accent); }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 460px;
+    position: relative;
+    z-index: 1;
+  }
+  .showcase-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .showcase-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .showcase-item:hover img { transform: scale(1.08); }
+  .showcase-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,26,47,0.8) 0%, transparent 50%);
+    transition: opacity 0.5s;
+  }
+  .showcase-item:hover::after { opacity: 0.6; }
+  .showcase-item .caption {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    z-index: 2;
+    color: #fff;
+  }
+  .showcase-item .caption h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .showcase-item .caption p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+  .showcase-item.big { grid-row: span 2; }
+
+  /* ===== 理念结语 ===== */
+  .closing {
+    padding: 120px 60px;
+    text-align: center;
+    background: var(--bg-soft);
+    position: relative;
+  }
+  .closing-slogan {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    color: var(--navy);
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  .closing-slogan .accent { color: var(--accent); }
+  .closing-text {
+    font-size: 15px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 2;
+  }
+  .closing-line {
+    width: 1px;
+    height: 50px;
+    background: var(--accent);
+    margin: 40px auto 0;
+  }
+
+  /* ===== 底部 ===== */
+  footer {
+    background: var(--navy);
+    padding: 60px 60px 30px;
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  .footer-brand .logo-text { color: #fff; font-size: 18px; }
+  .footer-brand .logo-text small { color: var(--text-muted); }
+  .footer-brand p {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 2;
+    max-width: 320px;
+  }
+  .footer-contact h5 {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .footer-contact p {
+    font-size: 13px;
+    line-height: 2.2;
+  }
+  .footer-contact .phone {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 900px) {
+    .navbar { padding: 16px 24px; }
+    .nav-links, .nav-phone { display: none; }
+    .hero { min-height: 560px; }
+    .intro, .values, .showcase, .closing { padding: 60px 24px; }
+    .values-grid { grid-template-columns: 1fr; }
+    .value-card { border-right: none; border-bottom: 1px solid #e8ecf1; }
+    .value-card:last-child { border-bottom: none; }
+    .showcase-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, 260px);
+      height: auto;
+    }
+    .footer-top { flex-direction: column; }
+  }
+
+  /* 滚动渐入 */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="logo">
+    <div class="logo-mark">SMS</div>
+    <div class="logo-text">思谋思能源科技<small>SMOOTH ENERGY TEC.CO</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">电磁除垢</a></li>
+    <li><a href="#">经典案例</a></li>
+    <li><a href="#">应用范围</a></li>
+    <li><a href="#" class="active">关于思谋思</a></li>
+    <li><a href="#">联系思谋思</a></li>
+  </ul>
+  <div class="nav-phone"><span>400</span>-612-0379</div>
+</nav>
+
+<!-- Hero区 -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">ABOUT SMS · 企业理念</div>
+    <h1 class="hero-title">
+      <span class="char char-accent">诚</span>以立人<br>
+      <span class="char char-accent">善</span>以造物<br>
+      <span class="char char-accent">德</span>以立业
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">
+      做<strong>值得信赖</strong>的人 &nbsp;·&nbsp; 造<strong>有益社会</strong>的产品 &nbsp;·&nbsp; 成<strong>受人尊敬</strong>的企业
+    </p>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- 理念引言 -->
+<section class="intro">
+  <p class="intro-quote reveal">
+    人无诚不立，业无善不兴，<span class="hl">企无德不远</span>。
+  </p>
+  <p class="intro-text reveal">
+    思谋思能源科技深耕工业电磁节能领域，以分布式电磁激励系统为核心，致力于为工业客户提供高效、环保、可持续的水处理解决方案。我们相信，技术的价值不仅在于解决问题，更在于以诚信为本、以善念造物、以德行立业，在创造经济效益的同时，承担起对社会和环境的责任。
+  </p>
+</section>
+
+<!-- 三字理念区 -->
+<section class="values">
+  <div class="values-header reveal">
+    <div class="values-label">OUR VALUES</div>
+    <h2 class="values-title">三字立身 · 三重境界</h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <div class="value-num">01 / 诚</div>
+      <div class="value-char">诚</div>
+      <div class="value-line"></div>
+      <h3 class="value-title">以诚立身</h3>
+      <p class="value-desc">对客户以诚，对伙伴以诚，对同事以诚。言出必行，行必有果。诚信是我们最珍视的品格，也是赢得长久信赖的唯一途径。</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-num">02 / 善</div>
+      <div class="value-char">善</div>
+      <div class="value-line"></div>
+      <h3 class="value-title">以善造物</h3>
+      <p class="value-desc">不做无用之器，不逐浮华之名。每一项技术、每一台设备，都以解决真实问题、裨益社会为标尺，笃实求精，止于至善。</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-num">03 / 德</div>
+      <div class="value-char">德</div>
+      <div class="value-line"></div>
+      <h3 class="value-title">以德立业</h3>
+      <p class="value-desc">企业之大，不在规模，而在格局。守正道、重承诺、勇担当，在创造价值的同时回馈社会，方能受人尊敬、行稳致远。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 现场展示区 -->
+<section class="showcase">
+  <div class="showcase-header reveal">
+    <div class="showcase-label">ON SITE · 现场实录</div>
+    <h2 class="showcase-title">技术落地 <span>·</span> 工业现场</h2>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-item reveal">
+      <img src="photo_cooling.jpg" alt="工业循环水系统冷却塔现场">
+      <div class="caption">
+        <h4>循环水系统冷却塔</h4>
+        <p>工业循环冷却水处理 · 物理法阻垢除垢 · 环保无药剂</p>
+      </div>
+    </div>
+    <div class="showcase-item reveal">
+      <img src="photo_turbine.jpg" alt="发电厂汽轮发电机组车间">
+      <div class="caption">
+        <h4>汽轮发电机组车间</h4>
+        <p>电力行业循环水系统应用 · 不停机在线安装 · 远程可控</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 结语 -->
+<section class="closing">
+  <h2 class="closing-slogan reveal">
+    做值得信赖的人<br>
+    造<span class="accent">有益社会</span>的产品<br>
+    成受人尊敬的企业
+  </h2>
+  <p class="closing-text reveal">
+    从每一项技术到每一台设备，从每一次沟通到每一份承诺，思谋思能源科技始终以"诚、善、德"为根本，致力于让工业更高效、让环境更友好，与客户和伙伴共创长远价值。
+  </p>
+  <div class="closing-line"></div>
+</section>
+
+<!-- 底部 -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo-text">思谋思能源科技<small>SMOOTH ENERGY TEC.CO</small></div>
+      <p>专注工业电磁节能与物理法水处理，以分布式电磁激励系统为核心，为工业客户提供高效、环保、可持续的解决方案。</p>
+    </div>
+    <div class="footer-contact">
+      <h5>联系我们</h5>
+      <p>全国服务热线</p>
+      <p class="phone">400-612-0379</p>
+      <p style="margin-top:12px;">地址：河南省洛阳市</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 洛阳思谋思能源科技有限公司 版权所有
+  </div>
+</footer>
+
+<script>
+  // 导航栏滚动效果
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // 滚动渐入动画
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
